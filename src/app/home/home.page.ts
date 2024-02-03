@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { MovieService } from '../services/movie.service';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,19 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
-export class HomePage {
-  constructor() {}
+export class HomePage implements OnInit {
+  constructor(
+    private _movieService: MovieService,
+  ) {}
+
+  ngOnInit(): void {
+    this.loadMovies();
+  }
+
+  loadMovies(): void {
+    this._movieService.getMovies()
+    .subscribe(
+      movies => console.log(movies),
+    );
+  }
 }
